@@ -57,6 +57,14 @@ COPY public.playable_specialization (playable_specialization_id, specialization_
 
 
 --
+-- Data for Name: realm; Type: TABLE DATA; Schema: public; Owner: raidrunner_user
+--
+
+COPY public.realm (realm_id, realm_category, realm_slug) FROM stdin;
+\.
+
+
+--
 -- PostgreSQL database dump complete
 --
 

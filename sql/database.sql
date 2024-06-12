@@ -18,11 +18,13 @@ SET row_security = off;
 
 ALTER TABLE ONLY public.playable_specialization DROP CONSTRAINT fk_specializationtype_playablespecialization;
 ALTER TABLE ONLY public.playable_race DROP CONSTRAINT fk_faction_playableclass;
+ALTER TABLE ONLY public.realm DROP CONSTRAINT realm_pkey;
 ALTER TABLE ONLY public.player_specialization_type DROP CONSTRAINT player_specialization_type_pkey;
 ALTER TABLE ONLY public.playable_specialization DROP CONSTRAINT playable_specialization_pkey;
 ALTER TABLE ONLY public.playable_race DROP CONSTRAINT playable_race_pkey;
 ALTER TABLE ONLY public.playable_class DROP CONSTRAINT playable_class_pkey;
 ALTER TABLE ONLY public.faction DROP CONSTRAINT faction_pkey;
+DROP TABLE public.realm;
 DROP TABLE public.player_specialization_type;
 DROP TABLE public.playable_specialization;
 DROP TABLE public.playable_race;
@@ -97,6 +99,19 @@ CREATE TABLE public.player_specialization_type (
 ALTER TABLE public.player_specialization_type OWNER TO raidrunner_user;
 
 --
+-- Name: realm; Type: TABLE; Schema: public; Owner: raidrunner_user
+--
+
+CREATE TABLE public.realm (
+    realm_id integer NOT NULL,
+    realm_category character varying(255) NOT NULL,
+    realm_slug character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.realm OWNER TO raidrunner_user;
+
+--
 -- Name: faction faction_pkey; Type: CONSTRAINT; Schema: public; Owner: raidrunner_user
 --
 
@@ -134,6 +149,14 @@ ALTER TABLE ONLY public.playable_specialization
 
 ALTER TABLE ONLY public.player_specialization_type
     ADD CONSTRAINT player_specialization_type_pkey PRIMARY KEY (specialization_type_id);
+
+
+--
+-- Name: realm realm_pkey; Type: CONSTRAINT; Schema: public; Owner: raidrunner_user
+--
+
+ALTER TABLE ONLY public.realm
+    ADD CONSTRAINT realm_pkey PRIMARY KEY (realm_id);
 
 
 --
