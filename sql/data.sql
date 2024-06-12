@@ -52,7 +52,7 @@ COPY public.player_specialization_type (specialization_type_id, specialization_t
 -- Data for Name: playable_specialization; Type: TABLE DATA; Schema: public; Owner: raidrunner_user
 --
 
-COPY public.playable_specialization (playable_specialization_id, faction_id, playable_specialization_slug) FROM stdin;
+COPY public.playable_specialization (playable_specialization_id, specialization_type_id, playable_specialization_slug) FROM stdin;
 \.
 
 

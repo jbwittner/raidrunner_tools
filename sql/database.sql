@@ -77,7 +77,7 @@ ALTER TABLE public.playable_race OWNER TO raidrunner_user;
 
 CREATE TABLE public.playable_specialization (
     playable_specialization_id integer NOT NULL,
-    faction_id uuid NOT NULL,
+    specialization_type_id uuid NOT NULL,
     playable_specialization_slug character varying(255) NOT NULL
 );
 
@@ -149,7 +149,7 @@ ALTER TABLE ONLY public.playable_race
 --
 
 ALTER TABLE ONLY public.playable_specialization
-    ADD CONSTRAINT fk_specializationtype_playablespecialization FOREIGN KEY (faction_id) REFERENCES public.player_specialization_type(specialization_type_id);
+    ADD CONSTRAINT fk_specializationtype_playablespecialization FOREIGN KEY (specialization_type_id) REFERENCES public.player_specialization_type(specialization_type_id);
 
 
 --
