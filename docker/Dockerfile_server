@@ -1,0 +1,41 @@
+# Stage 1: Build the OpenAPI
+FROM maven:3.9-eclipse-temurin-17-alpine AS buildOpenAPI
+
+COPY ../../blizzard_openapi blizzard_openapi
+
+WORKDIR /blizzard_openapi/java_client
+
+RUN --mount=type=cache,target=/root/.m2 \
+    mvn clean install -DskipTests
+
+# Stage 2: Build application
+FROM maven:3.9-eclipse-temurin-17-alpine AS buildApplication
+
+COPY ../../pom.xml pom.xml
+COPY ../../common common
+COPY ../../server server
+COPY ../../runner/staticfetcher/pom.xml runner/staticfetcher/pom.xml
+
+RUN --mount=type=cache,target=/root/.m2 \
+    mvn clean package -DskipTests -Dcheckstyle.skip -pl server/infrastructure -am
+
+# Stage 3: Run the application
+FROM openjdk:17-bullseye
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Set the JVM options environment variable
+ENV JVM_OPTS="-Xms512m -Xmx1024m"
+
+# Set the Spring Boot profile environment variable
+ENV PROFILES="production"
+
+# Copy the compiled JAR file from the previous stage
+COPY --from=buildApplication /server/infrastructure/target/infrastructure-*.jar raidrunner-server.jar
+
+# Expose the port on which your application listens
+EXPOSE 8080
+
+# Set the entrypoint to run the JVM with the specified JVM options and Spring Boot parameters
+ENTRYPOINT ["sh", "-c", "java ${JVM_OPTS} -jar raidrunner-server.jar"]

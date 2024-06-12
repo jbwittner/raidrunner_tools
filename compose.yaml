@@ -1,0 +1,47 @@
+volumes:
+  db_raidrunner_volume:
+    name: "db_raidrunner_volume"
+  webapp_db_raidrunner_volume:
+    name: "webapp_db_raidrunner_volume"
+services:
+  db:
+    image: postgres:16.3-alpine3.20
+    container_name: raidrunner_databases
+    ports:
+      - '5432:5432'
+    volumes:
+      - db_raidrunner_volume:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: raidrunner_db
+      POSTGRES_USER: raidrunner_user
+      POSTGRES_PASSWORD: RaidRunnerPass2023
+  pgadmin:
+    depends_on:
+      - db
+    image: dpage/pgadmin4:8.8
+    container_name: raidrunner_pgadmin
+    ports:
+      - '8180:80'
+    volumes:
+      - webapp_db_raidrunner_volume:/var/lib/pgadmin
+      - ./pg/servers.json:/pgadmin4/servers.json
+      - ./pg/pgpass:/tmp/pgpass
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user-admin@raidrunner.com
+      PGADMIN_DEFAULT_PASSWORD: RaidRunnerPass2023
+    entrypoint: >
+      /bin/sh -c "
+      mkdir -p /var/lib/pgadmin/storage/user-admin_raidrunner.com;
+      cp /tmp/pgpass /var/lib/pgadmin/storage/user-admin_raidrunner.com/pgpass;
+      chmod 600 /var/lib/pgadmin/storage/user-admin_raidrunner.com/pgpass;
+      /entrypoint.sh;
+      "
+  swaggereditor:
+    image: swaggerapi/swagger-ui:v5.17.14
+    container_name: raidrunner_swagger_ui
+    volumes:
+      - ../blizzard_openapi:/tmp
+    ports:
+      - '8280:8080'
+    environment:
+      SWAGGER_JSON: /tmp/BlizzardOpenAPI.yaml
