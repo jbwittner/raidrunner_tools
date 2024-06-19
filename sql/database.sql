@@ -16,6 +16,7 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+ALTER TABLE ONLY public.playable_specialization DROP CONSTRAINT fk_playableclass_playablespecialization;
 ALTER TABLE ONLY public.user_account DROP CONSTRAINT user_account_pkey;
 ALTER TABLE ONLY public.realm DROP CONSTRAINT realm_pkey;
 ALTER TABLE ONLY public.playable_specialization DROP CONSTRAINT playable_specialization_pkey;
@@ -62,6 +63,7 @@ ALTER TABLE public.playable_race OWNER TO raidrunner_user;
 --
 
 CREATE TABLE public.playable_specialization (
+    playable_class_id integer NOT NULL,
     playable_specialization_id integer NOT NULL,
     playable_specialization_slug character varying(255) NOT NULL,
     specialization_type character varying(255) NOT NULL
@@ -134,6 +136,14 @@ ALTER TABLE ONLY public.realm
 
 ALTER TABLE ONLY public.user_account
     ADD CONSTRAINT user_account_pkey PRIMARY KEY (user_id);
+
+
+--
+-- Name: playable_specialization fk_playableclass_playablespecialization; Type: FK CONSTRAINT; Schema: public; Owner: raidrunner_user
+--
+
+ALTER TABLE ONLY public.playable_specialization
+    ADD CONSTRAINT fk_playableclass_playablespecialization FOREIGN KEY (playable_class_id) REFERENCES public.playable_class(playable_class_id);
 
 
 --
