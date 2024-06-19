@@ -16,10 +16,12 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+ALTER TABLE ONLY public.user_account DROP CONSTRAINT user_account_pkey;
 ALTER TABLE ONLY public.realm DROP CONSTRAINT realm_pkey;
 ALTER TABLE ONLY public.playable_specialization DROP CONSTRAINT playable_specialization_pkey;
 ALTER TABLE ONLY public.playable_race DROP CONSTRAINT playable_race_pkey;
 ALTER TABLE ONLY public.playable_class DROP CONSTRAINT playable_class_pkey;
+DROP TABLE public.user_account;
 DROP TABLE public.realm;
 DROP TABLE public.playable_specialization;
 DROP TABLE public.playable_race;
@@ -82,6 +84,19 @@ CREATE TABLE public.realm (
 ALTER TABLE public.realm OWNER TO raidrunner_user;
 
 --
+-- Name: user_account; Type: TABLE; Schema: public; Owner: raidrunner_user
+--
+
+CREATE TABLE public.user_account (
+    user_id integer NOT NULL,
+    battle_tag character varying(255) NOT NULL,
+    user_name character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.user_account OWNER TO raidrunner_user;
+
+--
 -- Name: playable_class playable_class_pkey; Type: CONSTRAINT; Schema: public; Owner: raidrunner_user
 --
 
@@ -111,6 +126,14 @@ ALTER TABLE ONLY public.playable_specialization
 
 ALTER TABLE ONLY public.realm
     ADD CONSTRAINT realm_pkey PRIMARY KEY (realm_id);
+
+
+--
+-- Name: user_account user_account_pkey; Type: CONSTRAINT; Schema: public; Owner: raidrunner_user
+--
+
+ALTER TABLE ONLY public.user_account
+    ADD CONSTRAINT user_account_pkey PRIMARY KEY (user_id);
 
 
 --
