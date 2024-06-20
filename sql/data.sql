@@ -367,7 +367,7 @@ COPY public.wow_account (account_id, user_id) FROM stdin;
 -- Data for Name: character; Type: TABLE DATA; Schema: public; Owner: raidrunner_user
 --
 
-COPY public."character" (account_id, character_id, playable_class_id, playable_race_id, realm_id, character_name) FROM stdin;
+COPY public."character" (account_id, character_id, character_level, playable_class_id, playable_race_id, realm_id, character_name) FROM stdin;
 \.
 
 

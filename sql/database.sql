@@ -47,6 +47,7 @@ SET default_table_access_method = heap;
 CREATE TABLE public."character" (
     account_id integer NOT NULL,
     character_id integer NOT NULL,
+    character_level integer NOT NULL,
     playable_class_id integer NOT NULL,
     playable_race_id integer NOT NULL,
     realm_id integer NOT NULL,
