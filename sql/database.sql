@@ -16,11 +16,11 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
-ALTER TABLE ONLY public."character" DROP CONSTRAINT fkcharacter_playablerace;
 ALTER TABLE ONLY public.wow_account DROP CONSTRAINT fk_wowaccount_user;
 ALTER TABLE ONLY public.playable_specialization DROP CONSTRAINT fk_playableclass_playablespecialization;
 ALTER TABLE ONLY public."character" DROP CONSTRAINT fk_character_wowaccount;
 ALTER TABLE ONLY public."character" DROP CONSTRAINT fk_character_realm;
+ALTER TABLE ONLY public."character" DROP CONSTRAINT fk_character_playablerace;
 ALTER TABLE ONLY public."character" DROP CONSTRAINT fk_character_playableclass;
 ALTER TABLE ONLY public.wow_account DROP CONSTRAINT wow_account_pkey;
 ALTER TABLE ONLY public.user_account DROP CONSTRAINT user_account_pkey;
@@ -201,6 +201,14 @@ ALTER TABLE ONLY public."character"
 
 
 --
+-- Name: character fk_character_playablerace; Type: FK CONSTRAINT; Schema: public; Owner: raidrunner_user
+--
+
+ALTER TABLE ONLY public."character"
+    ADD CONSTRAINT fk_character_playablerace FOREIGN KEY (playable_race_id) REFERENCES public.playable_race(playable_race_id);
+
+
+--
 -- Name: character fk_character_realm; Type: FK CONSTRAINT; Schema: public; Owner: raidrunner_user
 --
 
@@ -230,14 +238,6 @@ ALTER TABLE ONLY public.playable_specialization
 
 ALTER TABLE ONLY public.wow_account
     ADD CONSTRAINT fk_wowaccount_user FOREIGN KEY (user_id) REFERENCES public.user_account(user_id);
-
-
---
--- Name: character fkcharacter_playablerace; Type: FK CONSTRAINT; Schema: public; Owner: raidrunner_user
---
-
-ALTER TABLE ONLY public."character"
-    ADD CONSTRAINT fkcharacter_playablerace FOREIGN KEY (playable_race_id) REFERENCES public.playable_race(playable_race_id);
 
 
 --
