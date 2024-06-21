@@ -32,3 +32,7 @@ start:
 .PHONY: down
 down:
 	@docker compose -f compose.yaml down -v
+
+.PHONY: start-fetcher
+start-fetcher:
+	@docker compose -f compose.yaml -f compose.fetcher.yaml up -d
