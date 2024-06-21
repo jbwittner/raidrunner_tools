@@ -51,10 +51,10 @@ CREATE TABLE public."character" (
     character_level integer NOT NULL,
     equipped_item_level integer,
     is_active boolean NOT NULL,
-    last_login_timestamp integer,
     playable_class_id integer NOT NULL,
     playable_race_id integer NOT NULL,
     realm_id integer NOT NULL,
+    last_login_timestamp bigint,
     character_name character varying(255) NOT NULL
 );
 
