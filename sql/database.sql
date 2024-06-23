@@ -16,9 +16,8 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
-ALTER TABLE ONLY public.wow_account DROP CONSTRAINT fk_wowaccount_user;
 ALTER TABLE ONLY public.playable_specialization DROP CONSTRAINT fk_playableclass_playablespecialization;
-ALTER TABLE ONLY public."character" DROP CONSTRAINT fk_character_wowaccount;
+ALTER TABLE ONLY public."character" DROP CONSTRAINT fk_character_user;
 ALTER TABLE ONLY public."character" DROP CONSTRAINT fk_character_realm;
 ALTER TABLE ONLY public."character" DROP CONSTRAINT fk_character_playablerace;
 ALTER TABLE ONLY public."character" DROP CONSTRAINT fk_character_playableclass;
@@ -45,7 +44,6 @@ SET default_table_access_method = heap;
 --
 
 CREATE TABLE public."character" (
-    account_id integer NOT NULL,
     average_item_level integer,
     character_id integer NOT NULL,
     character_level integer NOT NULL,
@@ -54,6 +52,7 @@ CREATE TABLE public."character" (
     playable_class_id integer NOT NULL,
     playable_race_id integer NOT NULL,
     realm_id integer NOT NULL,
+    user_id integer NOT NULL,
     last_login_timestamp bigint,
     character_name character varying(255) NOT NULL
 );
@@ -221,11 +220,11 @@ ALTER TABLE ONLY public."character"
 
 
 --
--- Name: character fk_character_wowaccount; Type: FK CONSTRAINT; Schema: public; Owner: raidrunner_user
+-- Name: character fk_character_user; Type: FK CONSTRAINT; Schema: public; Owner: raidrunner_user
 --
 
 ALTER TABLE ONLY public."character"
-    ADD CONSTRAINT fk_character_wowaccount FOREIGN KEY (account_id) REFERENCES public.wow_account(account_id);
+    ADD CONSTRAINT fk_character_user FOREIGN KEY (user_id) REFERENCES public.user_account(user_id);
 
 
 --
@@ -234,14 +233,6 @@ ALTER TABLE ONLY public."character"
 
 ALTER TABLE ONLY public.playable_specialization
     ADD CONSTRAINT fk_playableclass_playablespecialization FOREIGN KEY (playable_class_id) REFERENCES public.playable_class(playable_class_id);
-
-
---
--- Name: wow_account fk_wowaccount_user; Type: FK CONSTRAINT; Schema: public; Owner: raidrunner_user
---
-
-ALTER TABLE ONLY public.wow_account
-    ADD CONSTRAINT fk_wowaccount_user FOREIGN KEY (user_id) REFERENCES public.user_account(user_id);
 
 
 --

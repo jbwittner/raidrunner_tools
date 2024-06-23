@@ -356,18 +356,10 @@ COPY public.user_account (user_id, battle_tag, user_name) FROM stdin;
 
 
 --
--- Data for Name: wow_account; Type: TABLE DATA; Schema: public; Owner: raidrunner_user
---
-
-COPY public.wow_account (account_id, user_id) FROM stdin;
-\.
-
-
---
 -- Data for Name: character; Type: TABLE DATA; Schema: public; Owner: raidrunner_user
 --
 
-COPY public."character" (account_id, average_item_level, character_id, character_level, equipped_item_level, is_active, playable_class_id, playable_race_id, realm_id, last_login_timestamp, character_name) FROM stdin;
+COPY public."character" (average_item_level, character_id, character_level, equipped_item_level, is_active, playable_class_id, playable_race_id, realm_id, user_id, last_login_timestamp, character_name) FROM stdin;
 \.
 
 
@@ -415,6 +407,14 @@ COPY public.playable_specialization (playable_class_id, playable_specialization_
 13	1467	Devastation	DAMAGE
 13	1468	Preservation	HEALER
 13	1473	Augmentation	DAMAGE
+\.
+
+
+--
+-- Data for Name: wow_account; Type: TABLE DATA; Schema: public; Owner: raidrunner_user
+--
+
+COPY public.wow_account (account_id, user_id) FROM stdin;
 \.
 
 
