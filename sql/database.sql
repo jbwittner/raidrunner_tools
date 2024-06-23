@@ -21,14 +21,12 @@ ALTER TABLE ONLY public."character" DROP CONSTRAINT fk_character_user;
 ALTER TABLE ONLY public."character" DROP CONSTRAINT fk_character_realm;
 ALTER TABLE ONLY public."character" DROP CONSTRAINT fk_character_playablerace;
 ALTER TABLE ONLY public."character" DROP CONSTRAINT fk_character_playableclass;
-ALTER TABLE ONLY public.wow_account DROP CONSTRAINT wow_account_pkey;
 ALTER TABLE ONLY public.user_account DROP CONSTRAINT user_account_pkey;
 ALTER TABLE ONLY public.realm DROP CONSTRAINT realm_pkey;
 ALTER TABLE ONLY public.playable_specialization DROP CONSTRAINT playable_specialization_pkey;
 ALTER TABLE ONLY public.playable_race DROP CONSTRAINT playable_race_pkey;
 ALTER TABLE ONLY public.playable_class DROP CONSTRAINT playable_class_pkey;
 ALTER TABLE ONLY public."character" DROP CONSTRAINT character_pkey;
-DROP TABLE public.wow_account;
 DROP TABLE public.user_account;
 DROP TABLE public.realm;
 DROP TABLE public.playable_specialization;
@@ -128,18 +126,6 @@ CREATE TABLE public.user_account (
 ALTER TABLE public.user_account OWNER TO raidrunner_user;
 
 --
--- Name: wow_account; Type: TABLE; Schema: public; Owner: raidrunner_user
---
-
-CREATE TABLE public.wow_account (
-    account_id integer NOT NULL,
-    user_id integer NOT NULL
-);
-
-
-ALTER TABLE public.wow_account OWNER TO raidrunner_user;
-
---
 -- Name: character character_pkey; Type: CONSTRAINT; Schema: public; Owner: raidrunner_user
 --
 
@@ -185,14 +171,6 @@ ALTER TABLE ONLY public.realm
 
 ALTER TABLE ONLY public.user_account
     ADD CONSTRAINT user_account_pkey PRIMARY KEY (user_id);
-
-
---
--- Name: wow_account wow_account_pkey; Type: CONSTRAINT; Schema: public; Owner: raidrunner_user
---
-
-ALTER TABLE ONLY public.wow_account
-    ADD CONSTRAINT wow_account_pkey PRIMARY KEY (account_id);
 
 
 --

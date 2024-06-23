@@ -411,14 +411,6 @@ COPY public.playable_specialization (playable_class_id, playable_specialization_
 
 
 --
--- Data for Name: wow_account; Type: TABLE DATA; Schema: public; Owner: raidrunner_user
---
-
-COPY public.wow_account (account_id, user_id) FROM stdin;
-\.
-
-
---
 -- PostgreSQL database dump complete
 --
 
