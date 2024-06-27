@@ -13,17 +13,21 @@ restore-data:
 
 .PHONY: backup-table
 backup-table:
-	@docker exec -i raidrunner_databases /bin/bash -c "PGPASSWORD=$(DB_PASSWORD) pg_dump --schema-only --clean --username $(DB_USER) $(DB_DATABASE)" > sql/database.sql
+	@docker exec -i raidrunner_databases /bin/bash -c "PGPASSWORD=$(DB_PASSWORD) pg_dump --column-inserts --schema-only --clean --username $(DB_USER) $(DB_DATABASE)" > sql/database.sql
 
 .PHONY: backup-data
 backup-data:
-	@docker exec -i raidrunner_databases /bin/bash -c "PGPASSWORD=$(DB_PASSWORD) pg_dump --data-only --username $(DB_USER) $(DB_DATABASE)" > sql/data.sql
+	@docker exec -i raidrunner_databases /bin/bash -c "PGPASSWORD=$(DB_PASSWORD) pg_dump --column-inserts --data-only --username $(DB_USER) $(DB_DATABASE)" > sql/data.sql
+
+.PHONY: backup-all
+backup-all:
+	@docker exec -i raidrunner_databases /bin/bash -c "PGPASSWORD=$(DB_PASSWORD) pg_dump --column-inserts --username $(DB_USER) $(DB_DATABASE)" > sql/all.sql
 
 .PHONY: restore
 restore: restore-table restore-data
 
 .PHONY: backup
-backup: backup-table backup-data
+backup: backup-table backup-data backup-all
 
 .PHONY: start
 start:
